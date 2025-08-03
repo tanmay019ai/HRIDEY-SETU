@@ -1,0 +1,35 @@
+.bubble {
+  margin: 10px 0;
+  padding: 14px 20px;
+  border-radius: 20px;
+  max-width: 75%;
+  text-align: left;
+  line-height: 1.6;
+  font-size: 1rem;
+  animation: fadeIn 0.4s ease-in;
+}
+
+.user {
+  background-color: #dcf8c6;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.guru {
+  background-color: #fce4ec;
+  color: #6a1b9a;
+  align-self: flex-start;
+  margin-right: auto;
+  font-style: italic;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
