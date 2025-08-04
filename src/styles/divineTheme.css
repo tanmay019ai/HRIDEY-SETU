@@ -1,0 +1,89 @@
+/* Background: glowing divine gradient */
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at top left, #1a001a, #000014);
+  font-family: 'Segoe UI', sans-serif;
+  color: #ff80ff;
+  overflow-x: hidden;
+}
+
+/* Glowing title text */
+.title {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: bold;
+  margin-top: 20px;
+  color: white;
+  text-shadow: 0 0 10px #ff99ff, 0 0 20px #ff33cc, 0 0 30px #ff00ff;
+}
+
+/* Chat window styling */
+.chat-window {
+  width: 90%;
+  max-width: 800px;
+  margin: 30px auto;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+  padding: 20px;
+  backdrop-filter: blur(8px);
+  color: #ffb3ff;
+}
+
+/* Message bubbles */
+.message-bubble {
+  margin: 10px 0;
+  padding: 12px 16px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffccff;
+  box-shadow: 0 0 10px #ff99ff;
+}
+
+/* Buttons */
+button {
+  background: #ff66cc;
+  color: black;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 0 10px #ff66cc, 0 0 20px #ff33cc;
+  transition: transform 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px #ff99ff, 0 0 25px #ff00cc;
+}
+
+/* Inputs and Textareas */
+textarea, input[type="text"] {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffd9ff;
+  border: 1px solid #ff99ff;
+  border-radius: 8px;
+  padding: 10px;
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* Fairy light dots (if using JS animation) */
+.fairy-light {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: #ff80ff;
+  border-radius: 50%;
+  box-shadow: 0 0 12px #ff66cc;
+  animation: flicker 2s infinite ease-in-out alternate;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.2; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1.2); }
+}

@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+
+import React, { useState, useRef, useEffect } from 'react';
+
 import MessageBubble from './messagebubble';
 import InputBox from './inputbox';
 
@@ -8,6 +10,23 @@ function ChatWindow() {
   const [savedDiaryEntries, setSavedDiaryEntries] = useState([]);
   const [messages, setMessages] = useState([]);
   const [showBhajans, setShowBhajans] = useState(false);
+  const diaryRef = useRef(null);
+  useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (diaryRef.current && !diaryRef.current.contains(event.target)) {
+      setShowDiary(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutside);
+
+  return () => {
+    document.removeEventListener('mousedown', handleClickOutside);
+  };
+}, [showDiary]);
+
+
+
 
   const speakText = (text) => {
   if (!text || text.trim() === "") {
@@ -131,49 +150,62 @@ function ChatWindow() {
   return (
     <div className="chat-window">
       {showDiary && (
-        <div className="diary-section">
-          <h3>📝 Write to Thakurji</h3>
-          <textarea
-            placeholder="Dear Shreeji..."
-            value={diaryText}
-            onChange={(e) => setDiaryText(e.target.value)}
-            style={{ width: "100%", height: "100px", marginBottom: "10px" }}
-          />
-          <button
-            onClick={() => {
-              if (diaryText.trim() !== "") {
-                setSavedDiaryEntries([...savedDiaryEntries, diaryText]);
-                fetchKrishnaReply(diaryText);
-                setDiaryText("");
-              } else {
-                alert("🕊️ Please write something before saving.");
-              }
-            }}
-            style={{
-              backgroundColor: "#b38dff",
-              color: "white",
-              padding: "10px 16px",
-              border: "none",
-              borderRadius: "8px",
-              fontSize: "16px",
-              cursor: "pointer",
-              transition: "0.3s ease",
-              boxShadow: "0 4px 10px rgba(0,0,0,0.1)"
-            }}
-          >
-            💾 Save My Feeling
-          </button>
+  <div
+    className="diary-section show"
+    ref={diaryRef}
+  >
+    <h3>📝 Write to Thakurji</h3>
+    <textarea
+      placeholder="Dear Shreeji..."
+      value={diaryText}
+      onChange={(e) => setDiaryText(e.target.value)}
+      style={{ width: "100%", height: "100px", marginBottom: "10px" }}
+    />
+    <button
+      onClick={() => {
+        if (diaryText.trim() !== "") {
+          setSavedDiaryEntries([...savedDiaryEntries, diaryText]);
+          fetchKrishnaReply(diaryText);
+          setDiaryText("");
+        } else {
+          alert("🕊️ Please write something before saving.");
+        }
+      }}
+      style={{
+        backgroundColor: "#b38dff",
+        color: "black",
+        padding: "10px 16px",
+        border: "none",
+        borderRadius: "8px",
+        fontSize: "16px",
+        cursor: "pointer",
+        transition: "0.3s ease",
+        boxShadow: "0 4px 10px rgba(0,0,0,0.1)"
+      }}
+    >
+      💾 Save My Feeling
+    </button>
 
-          <h4 style={{ marginTop: "20px" }}>📖 Previous Entries:</h4>
-          <ul>
-            {savedDiaryEntries.map((entry, idx) => (
-              <li key={idx} style={{ marginBottom: "10px", background: "#f9f9f9", padding: "10px", borderRadius: "8px" }}>
-                {entry}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+    <h4 style={{ marginTop: "20px" }}>📖 Previous Entries:</h4>
+    <ul>
+      {savedDiaryEntries.map((entry, idx) => (
+        <li
+          key={idx}
+          style={{
+            marginBottom: "10px",
+            background: "#f9f9f9",
+            padding: "10px",
+            borderRadius: "8px"
+          }}
+        >
+          {entry}
+        </li>
+      ))}
+    </ul>
+  </div>
+)}
+
+      
 
       <div className="mood-selector">
         <p>How are you feeling today?</p>

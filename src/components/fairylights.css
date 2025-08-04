@@ -1,0 +1,32 @@
+.fairy-lights {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px 0;
+  display: flex;
+  justify-content: space-around;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.fairy-lights .light {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ff00ff;
+  box-shadow: 0 0 8px #ff00ff, 0 0 15px #ff00ff, 0 0 25px #ff00ff;
+  animation: blink 2s infinite ease-in-out;
+  opacity: 0.8;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.2;
+    transform: translateY(5px);
+  }
+}

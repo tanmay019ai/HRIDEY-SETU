@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora&family=Satisfy&display=swap');
 
 body {
+  
   background: linear-gradient(to bottom, #fff0e5, #ffe4e1);
   font-family: 'Lora', serif;
   margin: 0;
@@ -147,3 +148,104 @@ body {
   cursor: pointer;
   font-weight: bold;
 }
+/* Divine Universe Theme Styles */
+body {
+  background: linear-gradient(to bottom, #0d0221, #1a032a);
+  color: #ffb3ff;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+.glow-text {
+  color: #ff4ff6;
+  text-shadow: 0 0 5px #ff4ff6, 0 0 10px #ff4ff6, 0 0 20px #ff4ff6;
+}
+
+.glow-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #ff66cc;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 0 10px #ff66cc;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+.fairy-light {
+  width: 10px;
+  height: 10px;
+  background: #ffcaff;
+  border-radius: 50%;
+  position: absolute;
+  animation: twinkle 2s infinite ease-in-out;
+  pointer-events: none;
+  z-index: 999;
+}
+.diary-section {
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid #ff85ff;
+  box-shadow: 0 0 20px rgba(255, 20, 147, 0.6);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px 0;
+  color: white;
+  backdrop-filter: blur(10px);
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.diary-section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.diary-section.exit {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.diary-section {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: all 0.4s ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+  
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  box-shadow: 0 0 20px #ff69b4aa; /* neon pink glow */
+  padding: 20px;
+  backdrop-filter: blur(6px);
+
+
+}
+
+.diary-section.show {
+  opacity: 1;
+  transform: scale(1);
+  max-height: 1000px; /* any large number */
+  overflow: visible;
+}
+
+.diary-section.exit {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+
