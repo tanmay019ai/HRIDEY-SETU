@@ -9,38 +9,29 @@ function ChatWindow() {
   const [messages, setMessages] = useState([]);
   const [showBhajans, setShowBhajans] = useState(false);
 
-  const speakText = async (text, voiceId = "ErXwobaYiN019PkySvjV") => {
-    const apiKey = "sk_your_elevenlabs_api_key"; // 🔐 Use .env for real apps
+  const speakText = (text) => {
+  if (!text || text.trim() === "") {
+    console.warn("⛔ speakText skipped: No text provided");
+    return;
+  }
 
-    try {
-      const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
-        method: "POST",
-        headers: {
-          "xi-api-key": apiKey,
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          text: text,
-          voice_settings: {
-            stability: 0.4,
-            similarity_boost: 0.7
-          }
-        })
-      });
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'hi-IN'; // Use 'en-IN' or 'en-US' if Hindi voice isn't available
+  utterance.pitch = 0.9;
+  utterance.rate = 1;
+  
+  speechSynthesis.cancel(); // Stop any ongoing speech
+  
 
-      if (!response.ok) {
-        console.error("Voice error:", await response.text());
-        return;
-      }
+  // Optional: try to pick a Hindi voice if available
+  const voices = window.speechSynthesis.getVoices();
+  const preferredVoice = voices.find(
+    (v) => v.lang === 'hi-IN' || v.name.toLowerCase().includes('hindi')
+  );
+  if (preferredVoice) utterance.voice = preferredVoice;
 
-      const audioBlob = await response.blob();
-      const audioUrl = URL.createObjectURL(audioBlob);
-      const audio = new Audio(audioUrl);
-      audio.play();
-    } catch (error) {
-      console.error("Voice error:", error);
-    }
-  };
+  speechSynthesis.speak(utterance);
+};
 
   const fetchQuoteAndSpeak = async () => {
     try {
@@ -55,37 +46,30 @@ function ChatWindow() {
     }
   };
 
-  const fetchDiaryQuote = async () => {
-    try {
-      const response = await fetch("http://localhost:5000/api/quote");
-      const data = await response.json();
+  const fetchKrishnaReply = async (text) => {
+    if (!text || text.trim() === "") return;
 
-      setMessages((prev) => [...prev, { from: 'guru', text: data.quote }]);
-      speakText(data.quote);
-    } catch (error) {
-      console.error("Failed to fetch quote:", error);
-    }
-  };
-
-  const fetchKrishnaReply = async (diaryText) => {
     try {
-      const res = await fetch("http://localhost:5000/api/diary-reply", {
+      const res = await fetch("http://localhost:5050/api/diary-reply", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ diaryText }),
+        body: JSON.stringify({ diaryText: text }),
       });
 
       const data = await res.json();
+      const reply = data.reply;
+
       setMessages((prev) => [
-        ...prev,
-        { from: "user", text: diaryText },
-        { from: "guru", text: data.reply }
-      ]);
-      speakText(data.reply);
+  ...prev,
+  { from: "guru", text: reply }
+]);
+
+      speakText(reply);
     } catch (err) {
       console.error("Failed to fetch reply:", err);
+      setMessages((prev) => [...prev, { from: 'guru', text: "🙏 Sorry, I couldn't get a reply right now." }]);
     }
   };
 
@@ -108,19 +92,19 @@ function ChatWindow() {
     const moodReplies = {
       heartbroken: [
         "Don't worry. Pain makes you deep. Let your heart break open — that's where Krishna enters. 🕉",
-        "Shree Premanand Ji says — जब दुनिया साथ छोड़ दे, तब ठाकुर सबसे पास होता है।"
+        "Shree Premanand Ji says — jab duniya sath chod de ,tab thakur sabse paas hota hai."
       ],
       anxious: [
         "Surrender your anxiety to me, and I shall give you peace. — Bhagavad Gita 12.15",
-        "Indresh Ji Maharaj says — चिन्ता नहीं, चरणों में भरोसा रखो।"
+        "Indresh Ji Maharaj says — chinta nhi charno me bharosa rakho."
       ],
       lonely: [
         "You are never alone. I reside in your heart, always — Shree Krishna 💙",
-        "जहाँ प्रेम है, वहाँ मैं हूँ — प्रेमानंद जी महाराज"
+        "jaha prem hai, waha mai hu-premanand ji maharaj"
       ],
       overthinking: [
         "Why worry so much? Do your karma, leave results to me — Gita 2.47",
-        "मन को स्थिर कर लो, फिर सब सरल हो जाएगा। — Indresh Ji"
+        "man ko sthir krlo phir sab saral ho jayega — Indresh Ji"
       ],
       blank: [
         "Blankness is good. It is space for divine thoughts. Let Krishna fill you now.",
@@ -128,7 +112,7 @@ function ChatWindow() {
       ],
       devotional: [
         "Prema Bhakti is the highest joy — sing Radha Naam, all wounds shall vanish 🌸",
-        "प्रेम ही मेरा स्वरूप है — बस उसी में खो जाओ। — ठाकुरजी"
+        "prem hi mera swaroop h-bass usi me kho jao-thakur ji."
       ]
     };
 
@@ -136,40 +120,13 @@ function ChatWindow() {
     setMessages((prev) => [...prev, { from: 'guru', text: reply }]);
     speakText(reply);
   };
-  const guruMsg = {
-  text: "Jo chhod jaaye, usey yaad karna moh hai...",
-  sender: 'guru',
-};
-
 
   const handleSend = async (text) => {
-  if (!text.trim()) return;
-
-  // Show your message
-  setMessages((prev) => [...prev, { from: 'user', text }]);
-
-  try {
-    // Ask backend for a Krishna reply
-    const response = await fetch("http://localhost:5000/api/diary-reply", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ diaryText: text }),
-    });
-
-    const data = await response.json();
-    const reply = data.reply;
-
-    // Show Krishna's reply
-    setMessages((prev) => [...prev, { from: 'guru', text: reply }]);
-
-    // Speak it
-    speakText(reply);
-  } catch (error) {
-    console.error("Error fetching Krishna reply:", error);
-    setMessages((prev) => [...prev, { from: 'guru', text: "🙏 Sorry, I couldn't get a reply right now." }]);
-  }
-};
-
+    if (!text.trim()) return;
+   
+    
+    fetchKrishnaReply(text);
+  };
 
   return (
     <div className="chat-window">
