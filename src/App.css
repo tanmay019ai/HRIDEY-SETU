@@ -247,5 +247,135 @@ body {
   opacity: 0;
   transform: scale(0.95);
 }
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  padding: 10px 30px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.title {
+  font-size: 2rem;
+  color: #ff9bff;
+  text-shadow: 0 0 5px #ff9bff, 0 0 10px #ff69b4;
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-tabs a {
+  color: #ffb6ff;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 8px 12px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 5px #ff69b4;
+}
+
+.nav-tabs a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  box-shadow: 0 0 10px #ff69b4;
+}
+.section {
+  margin-top: 60px;
+  padding: 60px 20px;
+  color: white;
+  background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  margin: 60px auto;
+  max-width: 900px;
+  box-shadow: 0 0 20px rgba(255, 182, 255, 0.2);
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: all 0.3s ease;
+}
+
+.section:hover {
+  box-shadow: 0 0 40px rgba(255, 182, 255, 0.4);
+}
+
+.section h2 {
+  font-size: 2.5rem;
+  color: #ffcaff;
+  text-shadow: 0 0 10px #ff9bff, 0 0 20px #ff69b4;
+  margin-bottom: 20px;
+}
+
+.section p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #fceeff;
+  text-shadow: 0 0 4px #ffd5f5;
+  padding: 0 10px;
+}
+
+.section a {
+  color: #ffafff;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 0 0 6px #ffa5f3;
+}
+
+.section a:hover {
+  color: #fff;
+  text-shadow: 0 0 12px #ff8ce0;
+}
+.mood-selector {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 30px;
+  margin: 40px auto;
+  text-align: center;
+  max-width: 800px;
+  box-shadow: 0 0 20px rgba(179, 141, 255, 0.3);
+}
+
+.mood-selector p {
+  font-size: 24px;
+  color: black;
+  margin-bottom: 20px;
+  text-shadow: 0 0 5px #ff99ff, 0 0 10px #cc66ff;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.mood-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.mood-buttons button {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid #ffccff;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-shadow: 0 0 3px #ffccff;
+}
+
+.mood-buttons button:hover {
+  background-color: rgba(255, 204, 255, 0.2);
+  box-shadow: 0 0 10px #ffccff;
+  transform: scale(1.05);
+}
+
+
+
 
 
