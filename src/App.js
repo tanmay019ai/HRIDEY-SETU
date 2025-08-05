@@ -72,9 +72,47 @@ function App() {
     <p>
       📷 <strong>Instagram:</strong> <a href="https://instagram.com/hridey.setu" target="_blank" rel="noopener noreferrer">@hridey.setu</a>
     </p>
-    <p>
-      💌 <strong>Feedback Box:</strong> <a href="https://forms.gle/your-google-form" target="_blank" rel="noopener noreferrer">Submit Feedback</a>
-    </p>
+    <div style={{
+    margin: '0 auto',
+    maxWidth: '500px',
+    background: 'rgba(255, 255, 255, 0.05)',
+    border: '1px solid rgba(255, 255, 255, 0.2)',
+    borderRadius: '16px',
+    padding: '20px',
+    boxShadow: '0 0 15px rgba(179, 141, 255, 0.3)',
+  }}>
+    <h3 style={{ color: '#ffccff', marginBottom: '10px' }}>💬 Send Us Your Feedback</h3>
+    <textarea
+      placeholder="Write your feedback here..."
+      rows="4"
+      style={{
+        width: '100%',
+        padding: '12px',
+        borderRadius: '8px',
+        border: '1px solid #ffccff',
+        backgroundColor: 'rgba(255,255,255,0.1)',
+        color: '#fff',
+        fontSize: '16px',
+        resize: 'vertical',
+        marginBottom: '12px',
+      }}
+    />
+    <button
+      style={{
+        backgroundColor: '#b38dff',
+        color: '#000',
+        padding: '10px 20px',
+        border: 'none',
+        borderRadius: '8px',
+        fontSize: '16px',
+        cursor: 'pointer',
+        transition: '0.3s ease',
+        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+      }}
+      onClick={() => alert('🙏 Thank you for your feedback!')}
+    >
+      ✨ Submit Feedback
+    </button>
   </div>
 
   <p style={{ marginTop: '20px' }}>
@@ -82,6 +120,7 @@ function App() {
   </p>
 </div>
 
+    </div>
     </div>
   );
 }
