@@ -165,7 +165,7 @@ function ChatWindow() {
       onClick={() => {
         if (diaryText.trim() !== "") {
           setSavedDiaryEntries([...savedDiaryEntries, diaryText]);
-          fetchKrishnaReply(diaryText);
+          
           setDiaryText("");
         } else {
           alert("🕊️ Please write something before saving.");

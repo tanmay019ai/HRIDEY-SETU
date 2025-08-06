@@ -41,6 +41,7 @@ body {
 }
 
 .input-box {
+  color: black;
   display: flex;
   padding: 12px;
   border-top: 1px solid #e0cfcf;
@@ -48,6 +49,7 @@ body {
 }
 
 .input-box input {
+  color: black;
   flex: 1;
   padding: 12px;
   border: 1px solid #e0cfcf;
@@ -56,6 +58,7 @@ body {
 }
 
 .input-box button {
+  color: black;
   margin-left: 10px;
   background-color: #ffe4b5;
   border: none;

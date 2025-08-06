@@ -2,7 +2,9 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
-const { Configuration, OpenAIApi } = require("openai"); // ✅ Works with openai@3.x
+
+const axios = require('axios');
+
 
 const app = express();
 const PORT = 5050;
@@ -29,38 +31,51 @@ app.get('/api/quote', (req, res) => {
   res.json({ quote: randomQuote });
 });
 
-// ✅ Correct way to configure OpenAI with v3.x
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAIApi(configuration);
+
+
+
 
 // ✨ Diary reply endpoint
 app.post('/api/diary-reply', async (req, res) => {
   const { diaryText } = req.body;
-  console.log("Received diaryText:", diaryText);
+  console.log("🔑 OpenRouter API Key:", process.env.OPENROUTER_API_KEY);
+  console.log("📥 Received diaryText:", diaryText);
+
 
   try {
-    const prompt = `You are Lord Krishna. Give a peaceful, heart-healing reply to this diary message, using Krishna’s wisdom, Premanand Ji’s bhav, and Bhagavad Gita references.\n\nUser wrote: "${diaryText}"\n\nYour reply:`;
-
-    const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+    const response = await axios.post('https://openrouter.ai/api/v1/chat/completions', {
+      model: 'openai/gpt-3.5-turbo', // Or try 'mistralai/mistral-7b-instruct' or 'anthropic/claude-3-haiku'
       messages: [
-        { role: "system", content: "You are Lord Krishna providing compassionate, devotional replies." },
-        { role: "user", content: prompt }
+        {
+          role: "system",
+          content: "You are Lord Krishna providing compassionate, devotional replies inspired by Shree Premanand Ji Maharaj, Indresh Ji Maharaj, and Bhagavad Gita."
+        },
+        {
+          role: "user",
+          content: `User wrote: "${diaryText}". Please reply as Krishna would.`
+        }
       ],
       temperature: 0.8,
       max_tokens: 200
+    }, {
+      headers: {
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        'Content-Type': 'application/json',
+        'HTTP-Referer': 'http://localhost:3000', // Or your frontend domain
+        'X-Title': 'Hridey Setu Diary Chat'
+      }
     });
 
-    res.json({ reply: completion.data.choices[0].message.content.trim() });
-  } catch (error) {
-    console.error("❌ OpenAI error:", error.response?.data || error.message);
+    res.json({ reply: response.data.choices[0].message.content.trim() });
+  } catch (err) {
+    console.error("❌ OpenRouter error:", err?.response?.data || err.message);
     res.status(500).json({ error: "Failed to get Krishna's reply" });
   }
 });
 
+
 // 🚀 Start the server
 app.listen(PORT, () => {
   console.log(`✅ Server running at http://localhost:${PORT}`);
+  
 });
