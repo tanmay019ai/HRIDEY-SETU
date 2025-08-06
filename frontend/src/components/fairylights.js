@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import  { useEffect } from 'react';
 import '../styles/divineTheme.css'; // make sure this contains .fairy-light class
 
 function FairyLights() {
