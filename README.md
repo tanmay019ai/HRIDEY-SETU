@@ -1,0 +1,1 @@
+A voice & text-based Hindi chatbot that responds compassionately as Lord Krishna, inspired by Shree Premanand Ji Maharaj, Indresh Ji Maharaj, and the Bhagavad Gita. Developed using Node.js, Express, OpenAI, and Whisper, this project enables spiritual conversations in Hindi using natural voice input and AI-generated replies
